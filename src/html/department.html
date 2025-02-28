@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Modal Thêm/Sửa Phòng Ban -->
+    <div id="department-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Thêm/Sửa Phòng Ban</h3>
+
+            <label for="maPhongBan">Mã phòng ban:</label>
+            <input type="text" id="maPhongBan" placeholder="Nhập mã phòng ban" disabled>
+
+            <label for="tenPhongBan">Tên phòng ban:</label>
+            <input type="text" id="tenPhongBan" placeholder="Nhập tên phòng ban">
+
+            <label for="moTa">Mô tả:</label>
+            <input type="text" id="moTa" placeholder="Nhập mô tả">
+
+            <label for="maQuanLy">Mã quản lý:</label>
+            <input type="text" id="maQuanLy" placeholder="Nhập mã quản lý">
+
+            <button class="save-btn" onclick="saveDepartment()">Lưu</button>
+        </div>
+    </div>
+
+
+
+    <div class="topbar">
+        <img src="https://static.ybox.vn/2024/8/4/1722486286062-Logo-Sonat.png" alt="Logo" class="logo">
+        <span class="company-name">SONAT GAME STUDIO</span>
+    </div>
+
+    <div class="sidebar">
+        <div class="user-info">
+            <img src="https://th.bing.com/th?id=OIP.VgWoHzk7yya5oFrT7j_NmQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" alt="User Avatar" class="avatar">
+            <p class="position">Quản trị viên</p>
+        </div>
+        <ul>
+            <li><a href="./dashboard.html">Dashboard</a></li>
+            <li><a href="#">Quản lí chức vụ</a></li>
+            <li><a href="./employee.html">Quản lí nhân viên</a></li>
+            <li><a href="#">Quản lí chấm công</a></li>
+            <li style="background-color: #34495E;" ><a href="#">Quản lí phòng ban</a></li>
+            <li><a href="#">Quản lí lương</a></li>
+
+        </ul>
+    </div>
+    <main class="content">
+        <div class="container">
+            <div class="table-container">
+                <h3>Danh sách phòng ban</h3>
+                <button class="add-btn" onclick="addDepartment()">Thêm phòng ban</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã phòng ban</th>
+                            <th>Tên phòng ban</th>
+                            <th>Mô tả</th>
+                            <th>Mã quản lí</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="departments-body">
+                        <tr>
+                            <td>1</td>
+                            <td>Phòng kế toán</td>
+                            <td>Phòng kế toán</td>
+                            <td>NV01</td>
+                            <td>
+                                <button class="edit-btn">Sửa</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Phòng kỹ thuật</td>
+                            <td>Phòng kỹ thuật</td>
+                            <td>NV01</td>
+                            <td>
+                                <button class="edit-btn">Sửa</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Phòng sản xuất</td>
+                            <td>Phòng sản xuất</td>
+                            <td>NV01</td>
+                            <td>
+                                <button class="edit-btn">Sửa</button>
+                                <button class="delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F1F5F9;
+        margin: 0;
+        display: flex;
+    }
+
+    .topbar {
+        width: 100%;
+        height: 3.6rem;
+        background: rgba(28,36,52,255);
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0 1.25rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.3);
+    }
+    .logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .company-name {
+        font-size: 22px;
+        font-weight: 500;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    .sidebar {
+        width: 14rem;
+        height: 100vh;
+        background: rgba(28,36,52,255);
+        color: white;
+        position: fixed;
+        left: 0;
+        top: 0;
+        padding: 8px;
+        padding-top: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .user-info {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .position {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        margin: 0;
+    }
+    .sidebar ul li {
+        margin: 10px 0;
+        font-size: 22px;
+        padding: 15px 0;
+        /* background-color: rgb(32, 53, 53); */
+        border-radius: 10px;
+        padding-left: 15px;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    .sidebar ul li:hover {
+        background-color: #34495E;
+    }
+
+
+
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+    }
+    .content {
+        margin-left: 240px;
+        margin-top: 50px;
+        /* padding: 20px; */
+        flex-grow: 1;
+    }
+    
+    h3{
+        font-size: 30px;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Kéo dài toàn bộ phần content */
+    box-sizing: border-box;
+    }
+
+    table {
+        width: 100%; /* Bảng kéo dài toàn bộ phần container */
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: #f0f0f0;
+        font-weight: bold;
+    }
+
+    .add-btn {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .add-btn:hover {
+        background-color: #27ae60;
+    }
+
+    .edit-btn, .delete-btn {
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-btn {
+        background-color: #f39c12;
+        color: white;
+    }
+
+    .edit-btn:hover {
+        background-color: #e67e22;
+    }
+
+    .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #c0392b;
+    }
+
+
+    /* CSS của phần thêm và sửa phòng ban */
+
+    /* Modal nền tối mờ */
+    .modal {
+        display: none; /* Ẩn mặc định */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Làm mờ nền */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Nội dung modal */
+    .modal-content {
+        background: white;
+        padding: 20px;
+        width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        position: relative;
+    }
+
+    /* Nút đóng */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    /* Input và nút */
+    input {
+        width: 100%;
+        padding: 8px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .save-btn {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .save-btn:hover {
+        background-color: #27ae60;
+    }
+
+
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetchDepartments();
+    });
+
+    function fetchDepartments() {
+        fetch("http://localhost/qlns_clone/php/getDepartment.php")
+            .then(response => response.json())
+            .then(data => {
+                const departmentsBody = document.getElementById("departments-body");
+                departmentsBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+                data.forEach(dept => {
+                    let row = `
+                        <tr>
+                            <td>${dept.MaPhongBan}</td>
+                            <td>${dept.TenPhongBan}</td>
+                            <td>${dept.MoTa}</td>
+                            <td>${dept.MaQuanLy}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editDepartment('${dept.MaPhongBan}')">Sửa</button>
+                                <button class="delete-btn" onclick="deleteDepartment('${dept.MaPhongBan}')">Xóa</button>
+                            </td>
+                        </tr>
+                    `;
+                    departmentsBody.insertAdjacentHTML("beforeend", row);
+                });
+            })
+            .catch(error => console.error("Lỗi khi tải dữ liệu phòng ban:", error));
+    }
+
+    function editDepartment(maPhongBan) {
+        alert(`Chỉnh sửa phòng ban: ${maPhongBan}`);
+        // Ở đây có thể mở modal hoặc redirect đến trang sửa
+    }
+
+    function deleteDepartment(maPhongBan) {
+        if (confirm("Bạn có chắc muốn xóa phòng ban này không?")) {
+            fetch(`http://localhost/qlns_clone/php/deleteDepartment.php?maPhongBan=${maPhongBan}`, {
+                method: "DELETE"
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchDepartments(); // Load lại danh sách
+            })
+            .catch(error => console.error("Lỗi khi xóa phòng ban:", error));
+        }
+    }
+
+
+
+    // Mở modal (Thêm hoặc Sửa)
+    function openModal(editMode = false, maPhongBan = "", tenPhongBan = "", moTa = "", maQuanLy = "") {
+        document.getElementById("department-modal").style.display = "flex";
+
+        if (editMode) {
+            document.getElementById("modal-title").textContent = "Chỉnh sửa phòng ban";
+            document.getElementById("maPhongBan").value = maPhongBan;
+            document.getElementById("tenPhongBan").value = tenPhongBan;
+            document.getElementById("moTa").value = moTa;
+            document.getElementById("maQuanLy").value = maQuanLy;
+        } else {
+            document.getElementById("modal-title").textContent = "Thêm phòng ban";
+            document.getElementById("maPhongBan").value = "";
+            document.getElementById("tenPhongBan").value = "";
+            document.getElementById("moTa").value = "";
+            document.getElementById("maQuanLy").value = "";
+        }
+    }
+
+    // Đóng modal
+    function closeModal() {
+        document.getElementById("department-modal").style.display = "none";
+    }
+
+    // Mở modal khi nhấn "Thêm"
+    function addDepartment() {
+        openModal(false);
+    }
+
+    // Mở modal khi nhấn "Sửa"
+    function editDepartment(maPhongBan) {
+        fetch(`http://localhost/qlns_clone/php/getDepartmentById.php?maPhongBan=${maPhongBan}`)
+            .then(response => response.json())
+            .then(dept => {
+                openModal(true, dept.MaPhongBan, dept.TenPhongBan, dept.MoTa, dept.MaQuanLy);
+            })
+            .catch(error => console.error("Lỗi khi lấy dữ liệu phòng ban:", error));
+    }
+
+    // Lưu dữ liệu
+    function saveDepartment() {
+        const maPhongBan = document.getElementById("maPhongBan").value;
+        const tenPhongBan = document.getElementById("tenPhongBan").value;
+        const moTa = document.getElementById("moTa").value;
+        const maQuanLy = document.getElementById("maQuanLy").value;
+
+        fetch("http://localhost/qlns_clone/php/saveDepartment.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ maPhongBan, tenPhongBan, moTa, maQuanLy })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            closeModal();
+            fetchDepartments(); // Load lại danh sách phòng ban
+        })
+        .catch(error => console.error("Lỗi khi lưu phòng ban:", error));
+    }
+
+</script>
