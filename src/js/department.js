@@ -28,6 +28,11 @@ function saveDepartment() {
   const tenPhongBan = document.getElementById("tenPhongBan").value;
   const moTa = document.getElementById("moTa").value;
 
+  if (!tenPhongBan || !moTa) {
+    alert("Bạn cần nhập đủ thông tin");
+    return;
+  }
+
   if (tenPhongBan && moTa) {
     if (currentEditRow) {
       // Cập nhật hàng hiện tại với dữ liệu mới
