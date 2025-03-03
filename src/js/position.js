@@ -40,6 +40,7 @@ function savePosition() {
       addPosition(tenChucVu);
     }
     closeModal();
+    updateIDs();
   }
 }
 
@@ -54,6 +55,15 @@ function editPosition(button) {
 }
 
 function deletePosition(button) {
+  button.closest("tr").remove();
+  updateIDs();
+}
+
+function updateIDs() {
+  const rows = document.querySelectorAll("#positions-body tr");
+  rows.forEach((row, index) => {
+    row.cells[0].innerText = `CV${String(index + 1).padStart(2, "0")}`;
+  });
   const row = button.closest("tr");
   const maChucVu = row.cells[0].innerText;
   deletePositionFromDB(maChucVu);

@@ -57,6 +57,7 @@ function saveDepartment() {
         .insertAdjacentHTML("beforeend", newRow);
     }
     closeModal();
+    updateIDs();
   }
 }
 
@@ -73,6 +74,13 @@ function editDepartment(button) {
 }
 
 function deleteDepartment(button) {
-  const row = button.closest("tr");
-  row.remove();
+  button.closest("tr").remove();
+  updateIDs();
+}
+
+function updateIDs() {
+  const rows = document.querySelectorAll("#departments-body tr");
+  rows.forEach((row, index) => {
+    row.cells[0].innerText = `PB${String(index + 1).padStart(2, "0")}`;
+  });
 }
