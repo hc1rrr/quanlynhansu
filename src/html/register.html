@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            margin-top: 100px;
+            align-items: center;
+        }
+
+        .register {
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            width: 25%;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            height: 18px;
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            border-radius: 5px;
+            height: 42px;
+            margin-top: 20px;
+            border: none;
+            background-color: rgba(55,65,81,255);
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: rgba(55,65,100,255);
+        }
+
+        input {
+            width: 97%;
+            border-radius: 5px;
+            height: 42px;
+            background-color: rgba(229,231,235,255);
+            border: none;
+            font-size: 14px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="register">
+            <h3>ĐĂNG KÝ</h3>
+            <p>Họ và Tên</p>
+            <input type="text" id="fullname" placeholder="Nhập họ và tên">
+            <span id="fullnameError" class="error-message"></span>
+            
+            <p>Email</p>
+            <input type="text" id="email" placeholder="Nhập email">
+            <span id="emailError" class="error-message"></span>
+            
+            <p>Mật khẩu</p>
+            <input type="password" id="password" placeholder="Nhập mật khẩu">
+            <span id="passwordError" class="error-message"></span>
+            
+            <p>Xác nhận mật khẩu</p>
+            <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu">
+            <span id="confirmPasswordError" class="error-message"></span>
+            
+            <p id="registerMessage" class="error-message"></p>
+            <button id="registerBtn">Đăng Ký</button>
+            <a href="login.html">Quay lại đăng nhập</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("registerBtn").addEventListener("click", function () {
+            let fullname = document.getElementById("fullname").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let confirmPassword = document.getElementById("confirmPassword").value.trim();
+            let registerMessage = document.getElementById("registerMessage");
+            
+            registerMessage.textContent = "";
+            
+            if (fullname === "" || email === "" || password === "" || confirmPassword === "") {
+                registerMessage.textContent = "❌ Vui lòng nhập đầy đủ thông tin!";
+                return;
+            }
+
+            if (password.length < 6) {
+                registerMessage.textContent = "❌ Mật khẩu phải có ít nhất 6 ký tự!";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                registerMessage.textContent = "❌ Mật khẩu xác nhận không khớp!";
+                return;
+            }
+
+            fetch("http://localhost/qlns_clone/php/register.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "fullname=" + encodeURIComponent(fullname) + "&email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("✅ " + data.message);
+                    window.location.href = "login.html";
+                } else {
+                    registerMessage.textContent = "❌ " + data.message;
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+                registerMessage.textContent = "❌ Lỗi kết nối đến máy chủ!";
+            });
+        });
+    </script>
+</body>
+</html>
