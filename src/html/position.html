@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý chức vụ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/position.css">
+    <script src="../js/position.js"></script>
+</head>
+<body>
+    <div id="sidebar"></div>
+
+    <!-- Modal Thêm/Sửa Phòng Ban -->
+    <div id="position-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Thêm Chức Vụ</h3>
+
+            <label for="tenChucVu">Tên chức vụ:</label>
+            <input type="text" id="tenChucVu" placeholder="Nhập tên chức vụ">
+
+            <button class="save-btn" onclick="savePosition()">Lưu</button>
+        </div>
+    </div>
+
+    <main class="content">
+        <div class="container">
+            <div class="table-container">
+                <h3>Danh sách chức vụ</h3>
+                <button class="add-btn" onclick="openModal()">Thêm chức vụ</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã chức vụ</th>
+                            <th>Tên chức vụ</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positions-body">
+                        <tr>
+                            <td>CV01</td>
+                            <td>Giám đốc</td>
+                            <td>
+                                <button class="edit-btn" onclick="editPosition(this)">Sửa</button>
+                                <button class="delete-btn" onclick="deletePosition(this)">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CV02</td>
+                            <td>Nhân viên</td>
+                            <td>
+                                <button class="edit-btn" onclick="editPosition(this)">Sửa</button>
+                                <button class="delete-btn" onclick="deletePosition(this)">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
