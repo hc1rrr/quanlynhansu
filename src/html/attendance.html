@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý chấm công</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/attendance.css">
+    <script src="../js/attendance.js"></script>
+</head>
+<body>
+    <div id="sidebar"></div>
+
+    <div id="attendance-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Thêm Chấm Công</h3>
+
+            <label for="tenPhongBan">Tên nhân viên:</label>
+            <input type="text" id="tenPhongBan" placeholder="Nhập tên nhân viên">
+
+            <label for="thoiGianVao">Thời gian vào:</label>
+            <input type="time" id="thoiGianVao" placeholder="Nhập thời gian vào">
+
+            <label for="thoiGianRa">Thời gian ra:</label>
+            <input type="time" id="thoiGianRa" placeholder="Nhập thời gian ra">
+
+            <label for="date">Ngày tháng:</label>
+            <input type="date" id="date" placeholder="Nhập ngày tháng">
+
+            <button class="save-btn" onclick="saveAttendance()">Lưu</button>
+        </div>
+    </div>
+
+    <main class="content">
+        <div class="container">
+            <div class="table-container">
+                <h3>Danh sách chấm công</h3>
+                <button class="add-btn" onclick="openModal()">Thêm chấm công</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã NV</th>
+                            <th>Tên NV</th>
+                            <th>Thời gian vào</th>
+                            <th>Thời gian ra</th>
+                            <th>Ngày tháng</th>
+                            <th>Tổng giờ làm</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendances-body">
+                        <tr>
+                            <td>NV01</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>08:02</td>
+                            <td>17:02</td>
+                            <td>2005-03-03</td>
+                            <td>8 giờ</td>
+                            <td>
+                                <button class="edit-btn" onclick="editAttendance(this)">Sửa</button>
+                                <button class="delete-btn" onclick="deleteAttendance(this)">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>NV02</td>
+                            <td>Trần Thị B</td>
+                            <td>08:02</td>
+                            <td>17:02</td>
+                            <td>2005-03-03</td>
+                            <td>8 giờ</td>
+                            <td>
+                                <button class="edit-btn" onclick="editAttendance(this)">Sửa</button>
+                                <button class="delete-btn" onclick="editAttendance(this)">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

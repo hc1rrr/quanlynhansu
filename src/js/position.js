@@ -26,6 +26,11 @@ window.onclick = function (event) {
 function savePosition() {
   const tenChucVu = document.getElementById("tenChucVu").value;
 
+  if (!tenChucVu) {
+    alert("Bạn cần nhập đủ thông tin");
+    return;
+  }
+
   if (tenChucVu) {
     if (currentEditRow) {
       // Cập nhật hàng hiện tại với dữ liệu mới
