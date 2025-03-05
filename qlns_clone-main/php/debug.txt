@@ -1,0 +1,11 @@
+=== BẮT ĐẦU DEBUG MỚI ===
+Dữ liệu nhận được:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+Số dòng tìm thấy: 1
+
+Truy vấn SQL: SELECT * FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
