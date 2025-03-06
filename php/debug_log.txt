@@ -1,0 +1,114 @@
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => fffffff
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => fffffff
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => fffffff
+)
+Array
+(
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => fffffff
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => ffffff
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => ffffff2
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => 222222
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => rrrrrrr
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => rrrrrrr
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => rrrrrrr
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => rrrrrrr
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => rrrrrrr
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => rrrrrrr
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => 22222222
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com1
+    [password] => 22222222
+)
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com1
+    [password] => 2222222
+)
