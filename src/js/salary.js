@@ -2,106 +2,62 @@ fetch("sidebar.html")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("sidebar").innerHTML = data;
-  });
-
-document.addEventListener("DOMContentLoaded", function () {
-    const addButton = document.querySelector(".add-btn");
-    const salaryBody = document.getElementById("salary-body");
-
-    addButton.addEventListener("click", function () {
-        openSalaryModal();
-    });
 });
 
-function openSalaryModal(salary = null, row = null) {
-    const modalHtml = `
-        <div class="modal" id="salary-modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeSalaryModal()">&times;</span>
-                <h3>${salary ? "Chỉnh sửa lương" : "Thêm lương"}</h3>
-                <input type="text" id="employee-id" placeholder="Mã nhân viên" value="${salary ? salary.id : ""}">
-                <input type="text" id="employee-name" placeholder="Tên nhân viên" value="${salary ? salary.name : ""}">
-                <input type="text" id="pay-period" placeholder="Kỳ trả lương" value="${salary ? salary.period : ""}">
-                <input type="number" id="workday" placeholder="Số ngày công" value="${salary ? salary.workday : ""}">
-                <input type="number" id="salary-amount" placeholder="Mức lương" value="${salary ? salary.salary : ""}">
-                <input type="number" id="total-salary" placeholder="Lương thực nhận" value="${salary ? salary.total : ""}" readonly>
-                <button class="save-btn" onclick="${salary ? `updateSalary(${row.rowIndex})` : "saveSalary()"}">${salary ? "Cập nhật" : "Lưu"}</button>
-            </div>
-        </div>`;
-    
-    document.body.insertAdjacentHTML("beforeend", modalHtml);
-}
-
-function closeSalaryModal() {
-    const modal = document.getElementById("salary-modal");
-    if (modal) {
-        modal.remove();
-    }
-}
-
-function saveSalary() {
-    const id = document.getElementById("employee-id").value;
-    const name = document.getElementById("employee-name").value;
-    const period = document.getElementById("pay-period").value;
-    const workday = parseFloat(document.getElementById("workday").value) || 0;
-    const salary = parseFloat(document.getElementById("salary-amount").value) || 0;
-    const total = workday * salary;
-
-    if (!id || !name || !salary) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
-        return;
+document.addEventListener('DOMContentLoaded', function () {
+    // Hàm tính lương
+    function calculateSalary(monthlySalary, workingDays, overtimeDays, totalDaysInMonth) {
+        const dailySalary = monthlySalary / totalDaysInMonth;
+        const salary = (dailySalary * workingDays) + (dailySalary * overtimeDays * 1.5);
+        return salary;
     }
 
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-        <td>${id}</td>
-        <td>${name}</td>
-        <td>${period}</td>
-        <td>${workday}</td>
-        <td>${salary}</td>
-        <td>${total}</td>
-        <td>
-            <button class="edit-btn" onclick="editSalary(this)">Sửa</button>
-            <button class="delete-btn" onclick="deleteSalary(this)">Xóa</button>
-        </td>
-    `;
+    // Hàm tính số ngày làm việc từ thứ 2 đến thứ 6 trong khoảng thời gian
+    function countWorkingDays(startDate, endDate) {
+        let workingDays = 0;
+        let currentDate = new Date(startDate);
 
-    document.getElementById("salary-body").appendChild(newRow);
-    closeSalaryModal();
-}
+        // Lặp qua các ngày trong khoảng thời gian
+        while (currentDate <= endDate) {
+            // Kiểm tra nếu là thứ 2 đến thứ 6 (tức là các ngày từ thứ 2 đến thứ 6)
+            if (currentDate.getDay() >= 1 && currentDate.getDay() <= 5) {
+                workingDays++;
+            }
+            // Tiến đến ngày tiếp theo
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
 
-function deleteSalary(button) {
-    const row = button.closest("tr");
-    row.remove();
-}
+        return workingDays;
+    }
 
-function editSalary(button) {
-    const row = button.closest("tr");
-    const cells = row.getElementsByTagName("td");
-    
-    const salary = {
-        id: cells[0].textContent,
-        name: cells[1].textContent,
-        period: cells[2].textContent,
-        workday: cells[3].textContent,
-        salary: cells[4].textContent,
-        total: cells[5].textContent
-    };
-    
-    openSalaryModal(salary, row);
-}
+    // Lấy phần thân bảng lương
+    const salaryTableBody = document.getElementById("salary-body");
 
-function updateSalary(rowIndex) {
-    const table = document.getElementById("salary-body");
-    const row = table.rows[rowIndex - 1];
-    const cells = row.getElementsByTagName("td");
+    // Duyệt qua từng hàng trong bảng và tính lương
+    salaryTableBody.querySelectorAll('tr').forEach(function(row) {
+        const monthlySalary = parseFloat(row.cells[3].innerText.replace(/,/g, '')); // Lương tháng
+        const overtimeDays = parseInt(row.cells[5].innerText); // Số ngày tăng ca
+        const salaryPeriod = row.cells[2].innerText; // Lấy giá trị kỳ trả lương
 
-    cells[0].textContent = document.getElementById("employee-id").value;
-    cells[1].textContent = document.getElementById("employee-name").value;
-    cells[2].textContent = document.getElementById("pay-period").value;
-    cells[3].textContent = document.getElementById("workday").value;
-    cells[4].textContent = document.getElementById("salary-amount").value;
-    cells[5].textContent = parseFloat(cells[3].textContent) * parseFloat(cells[4].textContent);
-    
-    closeSalaryModal();
-}
+        // Phân tích chuỗi kỳ trả lương (20/02/2024 - 19/03/2024)
+        const periodParts = salaryPeriod.split(' - ');
+        const startDateStr = periodParts[0]; // Ngày bắt đầu
+        const endDateStr = periodParts[1]; // Ngày kết thúc
+
+        // Chuyển đổi ngày bắt đầu và kết thúc từ chuỗi thành đối tượng Date
+        const startDate = new Date(startDateStr.split('/').reverse().join('-')); // Đổi định dạng từ dd/mm/yyyy sang yyyy-mm-dd
+        const endDate = new Date(endDateStr.split('/').reverse().join('-'));
+
+        // Tính số ngày làm việc từ thứ 2 đến thứ 6 trong khoảng thời gian
+        const workingDays = countWorkingDays(startDate, endDate);
+
+        // Tính lương thực nhận
+        const netSalary = calculateSalary(monthlySalary, workingDays, overtimeDays, 30); // Giả sử có 30 ngày trong tháng
+
+        // Định dạng lương thực nhận theo định dạng tiền tệ Việt Nam
+        const formattedSalary = netSalary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+        // Cập nhật cột "Lương thực nhận" với giá trị lương tính toán
+        row.cells[6].innerText = formattedSalary;
+    });
+});
