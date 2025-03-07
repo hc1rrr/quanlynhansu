@@ -123,12 +123,3 @@ document.getElementById("chamCongOutForm").onsubmit = function (event) {
   document.getElementById("dateOut").value = "";
   closeModal();
 };
-
-window.onclick = function (event) {
-  if (
-    event.target === document.getElementById("myModalIn") ||
-    event.target === document.getElementById("myModalOut")
-  ) {
-    closeModal();
-  }
-};
