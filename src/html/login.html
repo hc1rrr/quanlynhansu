@@ -123,16 +123,26 @@
                 
                     if (data.status === "success") {
                         alert("✅ " + data.message);
-                        window.location.href = "dashboard.html";
+                                        
+                        // Kiểm tra vai trò và điều hướng
+                        if (data.role === "admin") {
+                            window.location.href = "dashboard.html";  
+                        } else {
+                            window.location.href = "nvchamcong.html"; 
+
+                        }
                     } else {
                         loginMessage.textContent = "❌ " + data.message;
                     }
+                    
+
                 })
                 .catch(error => {
                     console.error("Lỗi:", error);
                     loginMessage.textContent = "❌ Lỗi kết nối đến máy chủ!";
                 });
             });
+
 
             document.querySelector("#email").addEventListener("blur", function () {
                 let email = this.value.trim();
