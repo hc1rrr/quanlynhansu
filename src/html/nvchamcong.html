@@ -6,7 +6,6 @@
     <title>Chấm công</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/nvchamcong.css">
-    <script src="../js/nvchamcong.js"></script>
 </head>
 <body>
     <div id="sidebar"></div>
@@ -14,6 +13,7 @@
     <!-- Modal Chấm Công Vào -->
     <div id="myModalIn" class="modal">
         <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             <h2>Chấm công vào</h2>
             <form id="chamCongInForm">
                 <label for="thoiGianVao">Thời gian vào:</label>
@@ -30,6 +30,7 @@
     <!-- Modal Chấm Công Ra -->
     <div id="myModalOut" class="modal">
         <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             <h2>Chấm công ra</h2>
             <form id="chamCongOutForm">
                 <label for="thoiGianRa">Thời gian ra:</label>
@@ -76,5 +77,7 @@
             </div>
         </div>
     </main>
+
+    <script src="../js/nvchamcong.js"></script>
 </body>
 </html>
