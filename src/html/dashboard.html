@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../js/dashboard.js"></script>
+</head>
+<body>
+    <div id="sidebar"></div>
+
+    </div>
+    <main class="content">
+        <div class="container">
+            <div class="grid">
+                <div class="card">
+                    <h4 id="employee-count">41</h4>     
+                    <p>Nhân viên</p>
+                </div>
+                <div class="card">
+                    <h4 id="position-count">9</h4>
+                    <p>Chức vụ</p>
+                </div>
+                <div class="card">
+                    <h4 id="department-count">3</h4>
+                    <p>Phòng ban</p>
+                </div>
+            </div>
+            <div class="grid2">
+                <div class="table-container">
+                    <h3>Chức vụ</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Chức vụ</th>
+                                <th>Số lượng nhân viên</th>
+                            </tr>
+                        </thead>
+                        <tbody id="positions-body">
+                            <tr>
+                                <td>Giám đốc</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Trưởng phòng</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Nhân viên</td>
+                                <td>38</td>
+                            </tr>
+                            <tr>
+                                <td>Thực tập sinh</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <h3>Phòng ban</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Phòng ban</th>
+                                <th>Số lượng nhân viên</th>
+                            </tr>
+                        </thead>
+                        <tbody id="departments-body">
+                            <tr>
+                                <td>Phòng kế toán</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>Phòng kỹ thuật</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>Phòng sản xuất</td>
+                                <td>26</td>
+                            </tr>
+                            <tr>
+                                <td>Phòng nhân sự</td>
+                                <td>10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phòng ban</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/department.css">
+    <script src="../js/department.js"></script>
+</head>
+<body>
+    <div id="sidebar"></div>
+
+    <div id="department-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Thêm Phòng Ban</h3>
+
+            <label for="tenPhongBan">Tên phòng ban:</label>
+            <input type="text" id="tenPhongBan" placeholder="Nhập tên phòng ban">
+
+            <label for="moTa">Mô tả:</label>
+            <textarea id="moTa" placeholder="Nhập mô tả"></textarea>
+
+            <button class="save-btn" onclick="saveDepartment()">Lưu</button>
+        </div>
+    </div>
+
+    <main class="content">
+        <div class="container">
+            <div class="table-container">
+                <h3>Danh sách phòng ban</h3>
+                <button class="add-btn" onclick="openModal()">Thêm phòng ban</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã phòng ban</th>
+                            <th>Tên phòng ban</th>
+                            <th>Mô tả</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="departments-body">
+                        <tr>
+                            <td>PB01</td>
+                            <td>Phòng kế toán</td>
+                            <td>Phòng kế toán là bộ phận quản lý tất cả các hoạt động liên quan đến kế toán & tài chính trong doanh nghiệp.</td>
+                            <td>
+                                <button class="edit-btn" onclick="editDepartment(this)">Sửa</button>
+                                <button class="delete-btn" onclick="deleteDepartment(this)">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PB02</td>
+                            <td>Phòng kỹ thuật</td>
+                            <td>Phòng kỹ thuật là bộ phận có nhiệm vụ thiết lập, vận hành và quản trị toàn hệ thống kỹ thuật của một doanh nghiệp.</td>
+                            <td>
+                                <button class="edit-btn" onclick="editDepartment(this)">Sửa</button>
+                                <button class="delete-btn" onclick="deleteDepartment(this)">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

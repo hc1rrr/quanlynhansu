@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chấm công</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/nvchamcong.css">
+</head>
+<body>
+    <div id="sidebar"></div>
+
+    <!-- Modal Chấm Công Vào -->
+    <div id="myModalIn" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Chấm công vào</h2>
+            <form id="chamCongInForm">
+                <label for="thoiGianVao">Thời gian vào:</label>
+                <input type="time" id="thoiGianVao" required>
+    
+                <label for="dateIn">Ngày tháng:</label>
+                <input type="date" id="dateIn" required>
+
+                <button type="submit">Xác nhận</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Chấm Công Ra -->
+    <div id="myModalOut" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Chấm công ra</h2>
+            <form id="chamCongOutForm">
+                <label for="thoiGianRa">Thời gian ra:</label>
+                <input type="time" id="thoiGianRa" required>
+    
+                <label for="dateOut">Ngày tháng:</label>
+                <input type="date" id="dateOut" required>
+
+                <button type="submit">Xác nhận</button>
+            </form>
+        </div>
+    </div>
+
+    <main class="content">
+        <div class="container">
+            <div class="table-container">
+                <h3>Danh sách chấm công</h3>
+                <button onclick="openModalIn()">Chấm công vào</button>
+                <button onclick="openModalOut()">Chấm công ra</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã NV</th>
+                            <th>Tên NV</th>
+                            <th>Thời gian vào</th>
+                            <th>Thời gian ra</th>
+                            <th>Ngày tháng</th>
+                            <th>Giờ công</th>
+                            <th>Tăng ca</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendances-body">
+                        <tr>
+                            <td>NV01</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>08:02</td>
+                            <td>17:02</td>
+                            <td>2005-03-03</td>
+                            <td>8 giờ</td>
+                            <td>0 giờ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/nvchamcong.js"></script>
+</body>
+</html>
