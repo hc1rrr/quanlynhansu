@@ -107,7 +107,6 @@ function editAttendance(button) {
   document.getElementById("thoiGianRa").value = cells[3].innerText;
   document.getElementById("date").value = cells[4].innerText;
 
-  document.getElementById("modal-title").innerText = "Sửa Chấm Công";
   openModal();
 }
 
