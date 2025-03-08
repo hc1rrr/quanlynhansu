@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xem thông tin cá nhân</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/xemthongtin.css" />
+  </head>
+  <body>
+    <div id="sidebar"></div>
+
+    <main class="content">
+      <div class="container">
+        <div class="table-container">
+          <h3>Thông tin cá nhân</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Mã NV</th>
+                <th>Tên NV</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>Địa chỉ</th>
+                <th>Email</th>
+                <th>SDT</th>
+                <th>Chức vụ</th>
+                <th>Phòng ban</th>
+                <th>Lương</th>
+              </tr>
+            </thead>
+            <tbody id="employee-body">
+              <tr>
+                <td>NV001</td>
+                <td>Nguyễn Văn A</td>
+                <td>Nam</td>
+                <td>1990-05-15</td>
+                <td>123 Đường ABC, TP.HCM</td>
+                <td>user1@sonat.com</td>
+                <td>0912345678</td>
+                <td>Nhân viên</td>
+                <td>Hành chính</td>
+                <td>10,000,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      fetch("sidebar2.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>
