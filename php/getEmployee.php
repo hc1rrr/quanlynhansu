@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Lấy action từ query ?action=
-$action = $_GET['action'] ?? null;
+$action = $_GET['action'] ?? 'get';
 
 if (!$action) {
     echo json_encode(["success" => false, "message" => "Thiếu action"]);
@@ -36,8 +36,13 @@ $conn->close();
 
 // Hàm lấy danh sách nhân viên
 function getEmployee($conn) {
-    $sql = "SELECT MaNhanVien, HoTen, GioiTinh, NgaySinh, DiaChi, Email, SDT, MaChucVu, MaPhongban FROM nhanvien";
+    $sql = "SELECT MaNhanVien, HoTen, GioiTinh, NgaySinh, DiaChi, SDT, MaChucVu, MaPhongban FROM nhanvien";
     $result = $conn->query($sql);
+
+    if (!$result) {
+        echo json_encode(["success" => false, "message" => "Lỗi truy vấn: " . $conn->error]);
+        return;
+    }
 
     $employees = [];
     while ($row = $result->fetch_assoc()) {
@@ -51,40 +56,59 @@ function getEmployee($conn) {
 function addEmployee($conn) {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (empty($data['tenNhanVien'])) {
-        echo json_encode(["success" => false, "message" => "Thiếu tên nhân viên"]);
+    if (empty($data['HoTen']) || empty($data['GioiTinh']) || empty($data['NgaySinh']) ||
+        empty($data['DiaChi']) || empty($data['SDT']) ||
+        empty($data['MaChucVu']) || empty($data['MaPhongban'])) {
+        echo json_encode(["success" => false, "message" => "Thiếu dữ liệu bắt buộc"]);
         return;
     }
 
-    function generateEmployeeId($conn) {
-        $sql = "SELECT MaNhanVien FROM nhanvien ORDER BY MaNhanVien DESC LIMIT 1";
-        $result = $conn->query($sql);
-    
-        if ($result->num_rows > 0) {
-            $lastId = $result->fetch_assoc()['MaNhanVien']; // VD: NV015
-            $number = (int) substr($lastId, 2); // Lấy ra phần số 015
-            $newNumber = $number + 1; // Tăng số lên 1
-            return 'NV' . str_pad($newNumber, 3, '0', STR_PAD_LEFT); // Trả về dạng NV001, NV002, ...
-        } else {
-            return 'NV001'; // Nếu chưa có ai thì là NV001
-        }
+    $MaNhanVien = generateEmployeeId($conn);
+    $HoTen = $conn->real_escape_string($data['HoTen']);
+    $GioiTinh = $conn->real_escape_string($data['GioiTinh']);
+    $NgaySinh = $conn->real_escape_string($data['NgaySinh']);
+    $DiaChi = $conn->real_escape_string($data['DiaChi']);
+    $SDT = $conn->real_escape_string($data['SDT']);
+    $MaChucVu = $conn->real_escape_string($data['MaChucVu']);
+    $MaPhongban = $conn->real_escape_string($data['MaPhongban']);
+
+    $sql = "INSERT INTO nhanvien (MaNhanVien, HoTen, GioiTinh, NgaySinh, DiaChi, SDT, MaChucVu, MaPhongban) 
+            VALUES ('$MaNhanVien', '$HoTen', '$GioiTinh', '$NgaySinh', '$DiaChi', '$SDT', '$MaChucVu', '$MaPhongban')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["success" => true, "message" => "Thêm nhân viên thành công"]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Lỗi: " . $conn->error]);
     }
-    
 }
 
 // Hàm cập nhật thông tin nhân viên
 function updateEmployee($conn) {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (empty($data['maNhanVien']) || empty($data['tenNhanVien'])) {
+    if (empty($data['MaNhanVien']) || empty($data['HoTen'])) {
         echo json_encode(["success" => false, "message" => "Thiếu mã hoặc tên nhân viên"]);
         return;
     }
 
-    $maNhanVien = $conn->real_escape_string($data['maNhanVien']);
-    $tenNhanVien = $conn->real_escape_string($data['tenNhanVien']);
+    $MaNhanVien = $conn->real_escape_string($data['MaNhanVien']);
+    $HoTen = $conn->real_escape_string($data['HoTen']);
+    $GioiTinh = $conn->real_escape_string($data['GioiTinh']);
+    $NgaySinh = $conn->real_escape_string($data['NgaySinh']);
+    $DiaChi = $conn->real_escape_string($data['DiaChi']);
+    $SDT = $conn->real_escape_string($data['SDT']);
+    $MaChucVu = $conn->real_escape_string($data['MaChucVu']);
+    $MaPhongban = $conn->real_escape_string($data['MaPhongban']);
 
-    $sql = "UPDATE nhanvien SET HoTen='$tenNhanVien' WHERE MaNhanVien='$maNhanVien'";
+    $sql = "UPDATE nhanvien SET 
+        HoTen='$HoTen',
+        GioiTinh='$GioiTinh',
+        NgaySinh='$NgaySinh',
+        DiaChi='$DiaChi',
+        SDT='$SDT',
+        MaChucVu='$MaChucVu',
+        MaPhongban='$MaPhongban'
+        WHERE MaNhanVien='$MaNhanVien'";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(["success" => true, "message" => "Cập nhật thành công"]);
@@ -97,13 +121,13 @@ function updateEmployee($conn) {
 function deleteEmployee($conn) {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (empty($data['maNhanVien'])) {
-        echo json_encode(["success" => false, "message" => "Thiếu mã nhân viên"]);
+    if (!is_array($data) || empty($data['MaNhanVien'])) {
+        echo json_encode(["success" => false, "message" => "Dữ liệu không hợp lệ hoặc thiếu mã nhân viên"]);
         return;
     }
 
-    $maNhanVien = $conn->real_escape_string($data['maNhanVien']);
-    $sql = "DELETE FROM nhanvien WHERE MaNhanVien='$maNhanVien'";
+    $MaNhanVien = $conn->real_escape_string($data['MaNhanVien']);
+    $sql = "DELETE FROM nhanvien WHERE MaNhanVien='$MaNhanVien'";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(["success" => true, "message" => "Xóa thành công"]);
@@ -119,10 +143,10 @@ function generateEmployeeId($conn) {
 
     if ($result->num_rows > 0) {
         $lastId = $result->fetch_assoc()['MaNhanVien'];
-        $number = (int) substr($lastId, 2) + 1; // Bỏ 'NV' và +1
-        return 'NV' . str_pad($number, 4, '0', STR_PAD_LEFT);
+        $number = (int) substr($lastId, 2) + 1;
+        return 'NV' . str_pad($number, 3, '0', STR_PAD_LEFT);
     } else {
-        return 'NV0001'; // Trường hợp chưa có ai
+        return 'NV001';
     }
 }
 ?>
