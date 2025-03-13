@@ -27,10 +27,11 @@ body {
 .company-name {
     font-size: 22px;
     font-weight: 500;
+    
 }
 
 .avatar {
-    margin-left: 72rem;
+    margin-left: 67rem;
     height: 30px;
     width: 30px;
     border-radius: 50%;
