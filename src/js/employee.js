@@ -75,7 +75,7 @@ function openEmployeeModal(employee = null, row = null) {
                     <option value="Nhân sự" ${employee && employee.department === 'Nhân sự' ? 'selected' : ''}>Nhân sự</option>
                 </select>
                 
-                <input type="number" id="employee-salary" placeholder="Lương" value="${employee ? employee.salary : ""}">
+                <input type="text" id="employee-salary" placeholder="Lương" value="${employee ? employee.salary : ""}">
                 <button class="save-btn" onclick="${employee ? `updateEmployee(${row.rowIndex})` : "saveEmployee()"}">${employee ? "Cập nhật" : "Lưu"}</button>
             </div>
         </div>`;
@@ -163,7 +163,7 @@ function editEmployee(button) {
         phone: cells[6].textContent,
         position: cells[7].textContent,
         department: cells[8].textContent,
-        salary: cells[9].textContent.replace(/,/g, '') // Remove commas from salary
+        salary: cells[9].textContent.trim().replace(/[^0-9]/g, '') // Remove all non-numeric characters
     };
 
     openEmployeeModal(employee, row);
@@ -184,7 +184,10 @@ function updateEmployee(rowIndex) {
     cells[6].textContent = document.getElementById("employee-phone").value;
     cells[7].textContent = document.getElementById("employee-position").value;
     cells[8].textContent = document.getElementById("employee-department").value;
-    cells[9].textContent = document.getElementById("employee-salary").value;
+    let salary = document.getElementById("employee-salary").value.replace(/[^0-9]/g, "");
+    salary = salary.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    cells[9].textContent = salary;
+
 
     closeEmployeeModal();
 }
